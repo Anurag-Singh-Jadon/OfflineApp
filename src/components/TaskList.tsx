@@ -1,18 +1,21 @@
 import { Button } from '@react-navigation/elements'
+import { useQuery, useRealm } from '@realm/react'
 import React, { useState } from 'react'
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Task } from '../models/Task'
 import TaskListItem from './TaskListItem'
 
 const TaskList = () => {
-    const [tasks, setTasks] = useState([{ description: "First task" },
-
-    { description: "Second task" },
-    { description: "Third task" }]);
+    const realm = useRealm()
+    const tasks = useQuery(Task)
     const [newTask, setNewTask] = useState("")
 
     const createTask = () => {
         console.log('Create 2',newTask)
-        setTasks([...tasks,{ description: newTask}])
+        // setTasks([...tasks,{ description: newTask}])
+        realm.write(() =>{
+          realm.create(Task,{description: newTask,user_id:'123'})
+        })
         setNewTask('')
     }
     return (
@@ -26,7 +29,13 @@ const TaskList = () => {
                 keyExtractor={(item, index) => index.toString()}
             />
             <TextInput value={newTask} onChangeText={setNewTask} placeholder='New task' placeholderTextColor={'grey'} style={styles.input} />
-            <Button title="Add task" onPress={createTask} />
+            <Button
+                title="Create Task"
+                onPress={createTask}
+                color="#841584"
+                disabled={!newTask.trim()}
+            />
+
         </View>
     )
 }

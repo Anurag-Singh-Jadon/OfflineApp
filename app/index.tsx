@@ -1,6 +1,12 @@
-import App from '../App';
-export default function Index() {
+
+import TaskBoard from "@/src/components/TaskBoard";
+import { Stack } from "expo-router";
+export default function HomeScreen(){
   return (
-    <App/>
+    <>
+    <Stack.Screen  options={{title:'Project Board'}}/>
+     <TaskBoard />
+    </>
+   
   );
 }

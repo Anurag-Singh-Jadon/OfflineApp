@@ -5,11 +5,13 @@ import { StatusBar } from 'expo-status-bar';
 import Realm from '../src/providers/Realm';
 export default function RootLayout() {
   return (
+    <>
     <ThemeProvider value={DarkTheme}>
       <Realm>
         <Stack screenOptions={{ title: 'Hello' }}></Stack>
       </Realm>
-      <StatusBar style='light' />
     </ThemeProvider >
+      <StatusBar style='light' />
+    </>
   )
 }
